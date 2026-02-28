@@ -2,7 +2,7 @@
 
 **Code from your iPhone while AI runs on your Windows PC — using Tmux, Termius, and Tailscale.**
 
-This repo contains a complete, beginner-friendly guide for setting up a remote coding workflow on **Windows + Git Bash + iPhone**. It's based on [chongdashu's video](https://www.youtube.com/watch?v=W_Ri0AeITiU).
+This repo contains a complete, beginner-friendly guide for setting up a remote coding workflow on **Windows + Git Bash + iPhone**.
 
 ## The Stack
 
@@ -34,6 +34,3 @@ The guide covers:
 6. The daily workflow — putting it all together
 7. Troubleshooting
 
-## Credits
-
-Based on [chongdashu's video: "Claude Code Remote Control + Tailscale + Tmux + Termius"](https://www.youtube.com/watch?v=W_Ri0AeITiU).
