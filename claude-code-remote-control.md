@@ -10,6 +10,7 @@
 
 - [Section 0: Overview & Prerequisites](#section-0-overview--prerequisites)
 - [Section 1: Claude Code Remote Control](#section-1-claude-code-remote-control)
+- [Why Go Beyond Native Remote Control?](#why-go-beyond-native-remote-control)
 - [Section 2: Tailscale — Access localhost from your phone](#section-2-tailscale--access-localhost-from-your-phone)
 - [Section 3: Termius + Tmux — Full terminal sync from your phone](#section-3-termius--tmux--full-terminal-sync-from-your-phone)
   - [Part A: Enable SSH on Windows](#part-a-enable-ssh-on-windows)
@@ -133,6 +134,62 @@ To stop the remote control session:
 - Or simply close the Claude Code session
 
 The remote control session ends when Claude Code stops.
+
+---
+
+## Why Go Beyond Native Remote Control?
+
+Claude Code's built-in `/remote-control` is great for sending text prompts from your phone — but it has a fundamental blind spot: **you can't see what you're building.**
+
+### The problem: vibe coding blind
+
+Consider this scenario. You're building a web app — a game, a dashboard, a landing page — and Claude Code is making changes to your code. On your PC, you'd open `localhost:5173` in your browser to see the result. But from your phone using Remote Control, all you see is Claude Code's terminal output: file diffs, tool calls, and text responses.
+
+You're coding blind. You can tell Claude Code "make the sidebar collapsible" and it will do it, but you have no way to verify that the sidebar actually looks right, that the animation is smooth, or that it didn't break the layout. You'd have to walk back to your PC to check.
+
+This is exactly the problem chongdashu encountered. He was building an isometric game inspired by Final Fantasy Tactics — a project with a 3D map, 2D character sprites, combat animations, and UI panels — all running in the browser on `localhost`. From his phone, he could tell Claude Code to "make the character preview panel collapsible," and Claude Code would do it. But he couldn't see the game. He couldn't verify that the collapse animation worked, that the panel didn't overlap the game map, or that the sprites still rendered correctly. For a visual project like a game, this is a dealbreaker.
+
+### What the Tmux + Termius + Tailscale stack solves
+
+This setup fills every gap that native Remote Control leaves open:
+
+#### 1. See localhost on your phone (Tailscale)
+
+Tailscale creates a secure network between your PC and phone. Once connected, you open Safari on your iPhone and type `http://<tailscale-ip>:5173` — and your web app appears, live, on your phone. You can interact with it, test touch gestures, check responsive layouts, and verify that Claude Code's changes actually look correct.
+
+This is the single biggest upgrade over native Remote Control. **You complete the feedback loop**: prompt Claude Code to make a change, then immediately see the result on your phone without walking back to your desk.
+
+#### 2. Works with any terminal tool, not just Claude Code (Tmux + Termius)
+
+Native Remote Control is locked to Claude Code. If you want to use OpenAI's Codex, Open Code, Aider, or any other CLI tool, you're out of luck — they don't have a "remote control" feature.
+
+Tmux + Termius solves this at the infrastructure level. You SSH into your PC from your phone and attach to a tmux session. Whatever is running in that session — Claude Code, Codex, a plain bash shell — you see it and control it. You can even run multiple sessions simultaneously: one for Claude Code, one for Codex, and switch between them on your phone.
+
+Chongdashu demonstrated this directly: he had Claude Code running in one tmux session and Codex in another, and switched between them from his iPhone. You're not dependent on any single AI vendor adding mobile support.
+
+#### 3. Sessions survive disconnects (Tmux)
+
+When you use native Remote Control and your phone goes to sleep or loses signal, you simply stop seeing updates until you reconnect. That's manageable.
+
+But with Termius alone (without tmux), if your SSH connection drops — which it will, because iOS aggressively kills background apps after about 3 minutes — your terminal session is gone. Any running process that was attached to that session gets killed.
+
+Tmux fixes this completely. Your session runs on the PC inside tmux, independent of any SSH connection. Your phone can connect and disconnect freely. When you reconnect, you `tmux attach` and everything is exactly where you left it — the full scrollback history, the running processes, the cursor position. Nothing is lost.
+
+#### 4. Full terminal access, not just a chat interface
+
+Native Remote Control gives you a chat-like interface for sending prompts to Claude Code. But sometimes you need to do things outside of Claude Code: run `git log`, check `npm run build` output, edit a config file, restart a dev server, check disk space, or run tests manually.
+
+With Tmux + Termius, you have a real terminal. You can do anything you'd do sitting at your PC.
+
+### Summary: when to use what
+
+| Scenario | Best tool |
+|---|---|
+| Quick prompt to Claude Code while away from desk | Native Remote Control (Section 1) |
+| Building a visual project (game, web app, UI) and need to see it | Add Tailscale (Section 2) |
+| Want to use tools other than Claude Code (Codex, Open Code, etc.) | Add Tmux + Termius (Section 3) |
+| Need reliable sessions that survive phone disconnects | Add Tmux + Termius (Section 3) |
+| Want the full "I'm at my desk but actually on my couch" experience | All three — Tailscale + Tmux + Termius (Sections 2 + 3) |
 
 ---
 
