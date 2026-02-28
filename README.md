@@ -34,3 +34,6 @@ The guide covers:
 6. The daily workflow — putting it all together
 7. Troubleshooting
 
+## Acknowledgement
+
+This project was inspired by the YouTube video ["Claude Code Remote Control is here... But Has A Problem. Here's How To Fix it."](https://www.youtube.com/watch?v=W_Ri0AeITiU) by chongdashu.
