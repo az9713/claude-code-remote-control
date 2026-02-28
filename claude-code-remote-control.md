@@ -147,7 +147,7 @@ Consider this scenario. You're building a web app — a game, a dashboard, a lan
 
 You're coding blind. You can tell Claude Code "make the sidebar collapsible" and it will do it, but you have no way to verify that the sidebar actually looks right, that the animation is smooth, or that it didn't break the layout. You'd have to walk back to your PC to check.
 
-This is exactly the problem chongdashu encountered. He was building an isometric game inspired by Final Fantasy Tactics — a project with a 3D map, 2D character sprites, combat animations, and UI panels — all running in the browser on `localhost`. From his phone, he could tell Claude Code to "make the character preview panel collapsible," and Claude Code would do it. But he couldn't see the game. He couldn't verify that the collapse animation worked, that the panel didn't overlap the game map, or that the sprites still rendered correctly. For a visual project like a game, this is a dealbreaker.
+This problem gets worse the more visual your project is. Imagine building an isometric game — a project with a 3D map, 2D character sprites, combat animations, and UI panels — all running in the browser on `localhost`. You could tell Claude Code "make the character preview panel collapsible," and it would do it. But you couldn't see the game. You couldn't verify that the collapse animation worked, that the panel didn't overlap the game map, or that the sprites still rendered correctly. For any visual project — a game, a dashboard, a landing page — this is a dealbreaker.
 
 ### What the Tmux + Termius + Tailscale stack solves
 
@@ -1037,4 +1037,4 @@ Run these in **PowerShell** on your Windows PC:
 
 ## Credits
 
-This guide is based on [chongdashu's video: "Claude Code Remote Control + Tailscale + Tmux + Termius"](https://www.youtube.com/watch?v=W_Ri0AeITiU), adapted for Windows + Git Bash + iPhone.
+Adapted for Windows + Git Bash + iPhone. See the [README](README.md) for acknowledgements.
